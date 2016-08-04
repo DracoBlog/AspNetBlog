@@ -1,0 +1,28 @@
+﻿@using Blog.Classes
+
+@{
+    ViewBag.Title = "Home";
+}
+
+@model List<Blog.Models.Post>
+
+<section class="row">
+    @foreach (var post in Model)
+    {
+        <article class="post col-md-6">
+            <h2 class="title"><a href="/Posts/Details/@post.Id">@post.Title</a></h2>
+            <div class="about">
+                Posted by 
+                @if (post.Author != null)
+                {
+                    <i>@post.Author.FullName (@post.Author.UserName)</i>
+                }
+                on <i>@post.Date</i>
+            </div>
+            <div class="body">
+                @Utils.CutText(post.Body)
+               @*@Html.Raw(post.Body))*@
+            </div>
+        </article>
+    }
+</section>

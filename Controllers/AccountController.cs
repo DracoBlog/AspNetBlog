@@ -12,7 +12,7 @@ using Blog.Models;
 
 namespace Blog.Controllers
 {
-    [Authorize]
+    [System.Web.Mvc.Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -63,7 +63,7 @@ namespace Blog.Controllers
 
         //
         // POST: /Account/Login
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
@@ -106,7 +106,7 @@ namespace Blog.Controllers
 
         //
         // POST: /Account/VerifyCode
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
@@ -144,7 +144,7 @@ namespace Blog.Controllers
 
         //
         // POST: /Account/Register
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
@@ -200,7 +200,7 @@ namespace Blog.Controllers
 
         //
         // POST: /Account/ForgotPassword
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
@@ -244,7 +244,7 @@ namespace Blog.Controllers
 
         //
         // POST: /Account/ResetPassword
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
@@ -278,7 +278,7 @@ namespace Blog.Controllers
 
         //
         // POST: /Account/ExternalLogin
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
@@ -304,7 +304,7 @@ namespace Blog.Controllers
 
         //
         // POST: /Account/SendCode
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SendCode(SendCodeViewModel model)
@@ -354,7 +354,7 @@ namespace Blog.Controllers
 
         //
         // POST: /Account/ExternalLoginConfirmation
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
@@ -392,7 +392,7 @@ namespace Blog.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {

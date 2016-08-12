@@ -7,7 +7,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Blog.Models;
-using System.Data.Entity;
 
 namespace Blog.Controllers
 {
@@ -28,7 +27,7 @@ namespace Blog.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
             }
             Post post = db.Posts.Find(id);
             if (post == null)
@@ -78,7 +77,7 @@ namespace Blog.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
             }
             Post post = db.Posts.Include(p => p.Author).SingleOrDefault(p => p.Id == id);
 
@@ -116,7 +115,7 @@ namespace Blog.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
             }
             Post post = db.Posts.Find(id);
             if (post == null)

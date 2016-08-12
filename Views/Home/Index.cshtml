@@ -1,12 +1,29 @@
 ﻿@using Blog.Classes
+@using Blog.Models
 
 @{
     ViewBag.Title = "Home";
 }
 
-@model List<Blog.Models.Post>
-
-<section class="row">
+@model List<PostViewModel>
+<div class="marg col-md-12">
+    @using (Ajax.BeginForm("Search", null,
+                                new AjaxOptions
+                                {
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "results",
+                                    InsertionMode = InsertionMode.Replace
+                                }, new { id = "searchForm" }))
+    {
+        <input type="text" name="query" placeholder="Live Search"
+               oninput="$('#searchForm').submit()" />
+            <input type="submit" value="Search" />
+    }
+    <div id="results">
+        @Html.Partial("_PostResult", Model)
+    </div>
+</div>
+@*<section class="row">
     @foreach (var post in Model)
     {
         <article class="post col-md-6">
@@ -21,8 +38,8 @@
             </div>
             <div class="body">
                 @Utils.CutText(post.Body)
-               @*@Html.Raw(post.Body))*@
-            </div>
+               @*@Html.Raw(post.Body))*@*@*@
+            @*</div>
         </article>
     }
-</section>
+</section>*@*@*@*@

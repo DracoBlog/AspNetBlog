@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using Blog.Models;
 
+using Blog.Extensions;
+
 namespace Blog.Controllers
 {
     [ValidateInput(false)]
@@ -65,6 +67,7 @@ namespace Blog.Controllers
                     .FirstOrDefault(u => u.UserName == User.Identity.Name);
                 db.Posts.Add(post);
                 db.SaveChanges();
+               this.AddNotification("Post Created!", NotificationType.INFO);
                 return RedirectToAction("Index");
             }
 
@@ -103,6 +106,7 @@ namespace Blog.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(post).State = EntityState.Modified;
+                this.AddNotification("Post was edit successfully !", NotificationType.INFO);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -133,6 +137,7 @@ namespace Blog.Controllers
         {
             Post post = db.Posts.Find(id);
             db.Posts.Remove(post);
+            this.AddNotification("Post was delete successfully", NotificationType.INFO);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

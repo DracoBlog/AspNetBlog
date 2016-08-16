@@ -1,0 +1,53 @@
+﻿@model Blog.Models.Post
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Post</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Body)
+        </dt>
+
+        <dd>
+            <textarea disabled="disabled" rows="10"
+                      class="form-control multi-line text-box"
+                      >@Model.Body</textarea>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index") |
+
+    @if (User.IsInRole("Administrators"))
+    { 
+        @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) @:|
+    }
+
+    @if (Model.Author != null && User.Identity.Name == Model.Author.UserName)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) @:| 
+    }
+</p>

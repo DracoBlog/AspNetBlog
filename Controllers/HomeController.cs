@@ -37,23 +37,23 @@ namespace Blog.Controllers
             return this.PartialView("_PostResult", result);
         }
 
-        public ActionResult ContentById(int id)
-        {
-            if (!Request.IsAjaxRequest())
-            {
-                Response.StatusCode = (int)HttpStatusCode.Forbidden;
-                return this.Content("This action can be invoke only by AJAX call");
-            }
+        //public ActionResult ContentById(int id)
+        //{
+        //    if (!Request.IsAjaxRequest())
+        //    {
+        //        Response.StatusCode = (int)HttpStatusCode.Forbidden;
+        //        return this.Content("This action can be invoke only by AJAX call");
+        //    }
 
-            var post = PostsData.GetAll().FirstOrDefault(x => x.Id == id);
-            if (post == null)
-            {
-                Response.StatusCode = (int)HttpStatusCode.NotFound;
-                return this.Content("Post not found");
-            }
+        //    var post = PostsData.GetAll().FirstOrDefault(x => x.Id == id);
+        //    if (post == null)
+        //    {
+        //        Response.StatusCode = (int)HttpStatusCode.NotFound;
+        //        return this.Content("Post not found");
+        //    }
 
-            return this.Content(post.Body);
-        }
+        //    return this.Content(post.Body);
+        //}
 
     }
 }

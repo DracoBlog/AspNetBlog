@@ -1,4 +1,5 @@
 ﻿@using System.Activities.Expressions
+@using Blog.Classes
 @using Blog.Models
 @model IEnumerable<PostViewModel>
 
@@ -6,15 +7,27 @@
 {
     foreach (var post in Model)
     {
-        <h3>@post.Title (by @post.Author)</h3>
-        @Ajax.ActionLink("See content", "ContentById", "Home", new { id = post.Id },
+        <a href="/Posts/Details/@post.Id"><h3>@post.Title (by @post.Author)</h3></a>
+        @*@Ajax.ActionLink("See content", "ContentById", "Home", new { id = post.Id },
             new AjaxOptions
             {
                 InsertionMode = InsertionMode.Replace,
                 UpdateTargetId = "post-content-" + post.Id
-            })
+            }, new { @class = "hide" })*@
+        if (@post.Body.Length > 100)
+        {
+                @Html.Raw(@post.Body.Substring(0, 100) + " ...")
+        }
+        else
+        {
+                @Html.Raw(@post.Body)
+        }
+
+        <div>
+            <a href="/Posts/Details/@post.Id" class="btn btn-default"> Read More </a>
+        </div>
         <div id="post-content-@post.Id"></div>
-    }
+        }
 }
 else
 {

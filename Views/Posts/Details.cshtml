@@ -1,53 +1,91 @@
-﻿@model Blog.Models.Post
+﻿@using Blog.Classes
+@using Blog.Models
+@model Blog.Models.Post
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div class="cont col-md-12">
+    <div class="info col-md-7">
 
-<div>
-    <h4>Post</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+        <div class="title col-md-11">
+            <h4 class="deepshadow">@Model.Title</h4>
+            <h6>~Posted on <i class="boldtext">@Model.Date.ToString("MMMM dd, yyyy")</i> by <i class="boldtext">@Model.Author.FullName</i></h6>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+        <div class="content col-md-11">
+            @Html.Raw(Model.Body)
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Body)
-        </dt>
+        <div id="list2" class="comments">
+            <ul>
+                <h2>Comments</h2>
+                <hr/>
+                @foreach (Comment comment in Model.Comments)
+                {
+                    <div class="commentPadding">
+                        <li>
+                            <h5 class="text">@comment.Text</h5>
+                            @if (comment.Author != null)
+                            {
+                                <h6>~Posted on <i class="boldtext">@comment.Date.ToString("MMMM dd, yyyy")</i> by <i class="boldtext">@comment.Author.FullName</i></h6>
+                            }
+                            else
+                            {
+                                <h6>~Posted on <i class="boldtext">@comment.Date.ToString("MMMM dd, yyyy")</i> by <i class="boldtext">Anonymous User</i></h6>
+                            }
+                            
+                        </li>
+                    </div>
+                }
+            </ul>
+        </div>
 
-        <dd>
-            <textarea disabled="disabled" rows="10"
-                      class="form-control multi-line text-box"
-                      >@Model.Body</textarea>
-        </dd>
+        <div class="actions col-md-11">
+            <p>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @Html.ActionLink("Back to List", "Index")
+                    @:|
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
+                    if (User.IsInRole("Administrators"))
+                    {
+                        @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+                        @:|
+                    }
 
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
+                    if (Model.Author != null && User.Identity.Name == Model.Author.UserName)
+                    {
+                            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+                            @:|
+                    }
+                }
 
-    </dl>
+                @Html.ActionLink("Back To Home", "Index", "Home")
+
+            </p>
+        </div>
+    </div>
+
+    <div id="list" class="recent col-md-3">
+        <h4 class="hit-the-floor">Recent Posts</h4>
+        <hr/>
+        <ul>
+            @foreach (var post in ViewBag.Posts)
+            {
+                <li>
+                    <a href="/Posts/Details/@post.Id">
+                        <div>
+                            <h4><em>@post.Title</em></h4>
+                            <h6 class="title">
+                                <i class="boldtext">@Model.Date.ToString("MMMM dd, yyyy")</i> by <i class="boldtext">@Model.Author.FullName</i>
+                            </h6>
+                        </div>
+                    </a>
+                </li>  
+            }
+        </ul>
+    </div>
+
 </div>
-<p>
-    @Html.ActionLink("Back to List", "Index") |
-
-    @if (User.IsInRole("Administrators"))
-    { 
-        @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) @:|
-    }
-
-    @if (Model.Author != null && User.Identity.Name == Model.Author.UserName)
-    {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) @:| 
-    }
-</p>

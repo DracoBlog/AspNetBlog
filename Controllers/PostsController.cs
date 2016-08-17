@@ -31,11 +31,14 @@ namespace Blog.Controllers
             {
                 return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
             }
-            Post post = db.Posts.Find(id);
+            Post post = db.Posts.Include(p => p.Author).SingleOrDefault(p => p.Id == id);
             if (post == null)
             {
                 return HttpNotFound();
             }
+
+            post.Comments = new List<Comment>();
+            post.Comments = db.Comments.Include(p => p.Author).Where(c => c.Post_Id == post.Id).ToList();
 
             var author = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
 
@@ -43,6 +46,10 @@ namespace Blog.Controllers
             {
                 post.Author = author;
             }
+            
+            var posts = db.Posts.OrderByDescending(p => p.Date).Take(6);
+            ViewBag.Posts = posts.ToList();
+
             return View(post);
         }
 
@@ -67,7 +74,7 @@ namespace Blog.Controllers
                     .FirstOrDefault(u => u.UserName == User.Identity.Name);
                 db.Posts.Add(post);
                 db.SaveChanges();
-               this.AddNotification("Post Created!", NotificationType.INFO);
+                this.AddNotification("Post Created!", NotificationType.INFO);
                 return RedirectToAction("Index");
             }
 
@@ -106,7 +113,7 @@ namespace Blog.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(post).State = EntityState.Modified;
-                this.AddNotification("Post was edit successfully !", NotificationType.INFO);
+                this.AddNotification("Post was edited successfully !", NotificationType.INFO);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -137,7 +144,7 @@ namespace Blog.Controllers
         {
             Post post = db.Posts.Find(id);
             db.Posts.Remove(post);
-            this.AddNotification("Post was delete successfully", NotificationType.INFO);
+            this.AddNotification("Post was deleted successfully", NotificationType.INFO);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

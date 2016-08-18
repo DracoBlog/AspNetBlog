@@ -6,11 +6,18 @@
     var successList = Html.GetNotifications(NotificationType.SUCCESS);
     var infoList = Html.GetNotifications(NotificationType.INFO);
 }
+<script>
+    window.setTimeout(function () {
+        $(".alert").fadeTo(500, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    }, 3000);
+</script>
 <!-- display errors -->
 @if (errorList != null)
 {
     <div class="alert alert-danger alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+     
         @if(errorList.Count() > 1){
             <strong><span class="glyphicon glyphicon-remove"></span> There are @errorList.Count() errors: </strong>
             <ul>
@@ -31,7 +38,7 @@
 @if (warningList != null)
 {
     <div class="alert alert-warning alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        
         @if(warningList.Count() > 1){
             <strong><span class="glyphicon glyphicon-warning-sign"></span> There are @warningList.Count() warnings: </strong>
             <ul>
@@ -52,7 +59,7 @@
 @if (successList != null)
 {
     <div class="alert alert-success alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      
         @if(successList.Count() > 1){
             <strong><span class="glyphicon glyphicon-ok"></span> There are @successList.Count() successful notifications: </strong>
             <ul>
@@ -73,7 +80,7 @@
 @if (infoList != null)
 {
     <div class="alert alert-info alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      
         @if(infoList.Count() > 1){
             <strong><span class="glyphicon glyphicon-info-sign"></span> There are @infoList.Count() notifications: </strong>
             <ul>

@@ -37,8 +37,13 @@ textarea {
     margin-top: 50px;
 }
 
-.alert{
-    margin-top: 10px;
+.alert {
+    margin-top: 15px;
+    text-align: center;
+    margin-left: 70px;
+    margin-right: 70px;
+    font-size: 18px;
+    border-radius: 80px;
 }
 
 .recent {

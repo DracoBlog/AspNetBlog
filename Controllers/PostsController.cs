@@ -74,7 +74,7 @@ namespace Blog.Controllers
                     .FirstOrDefault(u => u.UserName == User.Identity.Name);
                 db.Posts.Add(post);
                 db.SaveChanges();
-                this.AddNotification("Post Created!", NotificationType.INFO);
+                this.AddNotification("Post Created!", NotificationType.SUCCESS);
                 return RedirectToAction("Index");
             }
 
@@ -114,7 +114,7 @@ namespace Blog.Controllers
             {
                 db.Entry(post).State = EntityState.Modified;
                 db.SaveChanges();
-                this.AddNotification("Post was edited successfully !", NotificationType.INFO);
+                this.AddNotification("Post was edited successfully !", NotificationType.SUCCESS);
                 return RedirectToAction("Index");
             }
             return View(post);
@@ -144,7 +144,7 @@ namespace Blog.Controllers
         {
             Post post = db.Posts.Find(id);
             db.Posts.Remove(post);
-            this.AddNotification("Post was deleted successfully", NotificationType.INFO);
+            this.AddNotification("Post was deleted successfully", NotificationType.SUCCESS);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

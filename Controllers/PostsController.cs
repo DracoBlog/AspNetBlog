@@ -113,8 +113,8 @@ namespace Blog.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(post).State = EntityState.Modified;
-                this.AddNotification("Post was edited successfully !", NotificationType.INFO);
                 db.SaveChanges();
+                this.AddNotification("Post was edited successfully !", NotificationType.INFO);
                 return RedirectToAction("Index");
             }
             return View(post);

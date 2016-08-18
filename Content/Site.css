@@ -66,6 +66,7 @@ ul > div > li {
 .content {
     padding-top: 40px;
     padding-bottom: 20px;
+    word-wrap: break-word;
 }
 
 .text {
@@ -107,7 +108,7 @@ div.recent > h4 {
     letter-spacing: .15em;
 }
   
-  .elegantshadow {
+.elegantshadow {
     color: #131313;
     background-color: #e7e5e4;
     letter-spacing: .15em;
@@ -143,7 +144,7 @@ div.recent > h4 {
       -28px 56px 1px #e4e3e2;
   }
 
-  .deepshadow {
+.deepshadow {
     color: #e0dfdc;
     background-color: #333;
     letter-spacing: .1em;
@@ -167,20 +168,32 @@ div.recent > h4 {
       0 22px 30px rgba(0, 0, 0, 0.9);
   }
   
-  .hit-the-floor {
+.hit-the-floor {
     color: #fff;
     font-size: 12em;
     font-family: Helvetica;
     text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
   }
 
-#list { width:320px; }
-#list ul { font-style:italic; font-family:Georgia, Times, serif; font-size:24px; color:#bfe1f1; list-style-type: disc; }
-#list ul li p { padding:8px; font-style:normal; font-family:Arial; font-size:13px; color:#eee; }
-#list ul li p em { display: block; }
+#list {
+     width:320px;
+}
+#list ul {
+     font-style:italic; font-family:Georgia, Times, serif; font-size:24px; color:#bfe1f1; list-style-type: disc;
+}
+#list ul li p {
+     padding:8px; font-style:normal; font-family:Arial; font-size:13px; color:#eee;
+}
+#list ul li p em {
+     display: block;
+}
 
-#list2 ul { font-style:italic; font-family:Georgia, Times, serif; font-size:24px;list-style-type: disc; padding-left: 0; }
-#list2 ul li p { padding:8px; font-style:normal; font-family:Arial; font-size:13px; }
+#list2 ul {
+     font-style:italic; font-family:Georgia, Times, serif; font-size:24px;list-style-type: disc; padding-left: 0;
+}
+#list2 ul li p {
+     padding:8px; font-style:normal; font-family:Arial; font-size:13px;
+}
 #list2 hr {
     border: none;
     height: 10px;

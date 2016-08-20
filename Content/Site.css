@@ -213,7 +213,7 @@ div.recent > h4 {
 }
 
 .commentPadding {
-    padding-bottom: 5px;
+    padding-bottom: 2px;
     padding-left: 20px;
 }
 
@@ -222,7 +222,9 @@ div.recent > h4 {
 }
 
 @media screen and (max-width: 992px) {
+
     #list {
         width: 100%;
     }
+
 }

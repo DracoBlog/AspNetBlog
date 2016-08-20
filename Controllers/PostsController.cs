@@ -78,7 +78,12 @@ namespace Blog.Controllers
 
             ViewBag.Post = post;
 
-            return View();
+            var result = this.db.Posts
+                .Where(p => p.Id == id)
+                .Select(PostViewModel.FromPost)
+                .FirstOrDefault();
+
+            return View(result);
         }
 
         // GET: Posts/Create

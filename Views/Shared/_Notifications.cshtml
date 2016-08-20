@@ -12,6 +12,9 @@
             $(this).remove();
         });
     }, 3000);
+    $(document).click(function () {
+        $(".alert").remove();
+    });
 </script>
 <!-- display errors -->
 @if (errorList != null)

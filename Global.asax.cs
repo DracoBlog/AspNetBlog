@@ -22,5 +22,14 @@ namespace Blog
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        public static void RegisterRoutes(RouteCollection routes)
+        {
+            routes.MapRoute(
+                "SaveComment", // Route name
+                "{controller}/{action}/{id}", // URL with parameters
+                new {controller = "Posts", action = "Details", id = ""} // Parameter defaults
+            );
+        }
     }
 }

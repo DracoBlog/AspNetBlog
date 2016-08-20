@@ -10,6 +10,10 @@ namespace Blog.Models
 {
     public class Comment
     {
+        public Comment()
+        {
+            this.Date = DateTime.Now;
+        }
         public int Id { get; set; }
 
         [StringLength(500)]

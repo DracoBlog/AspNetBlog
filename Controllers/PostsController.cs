@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.Mvc;
 using Blog.Models;
@@ -22,6 +25,29 @@ namespace Blog.Controllers
         {
             var postsWithAuthors = db.Posts.Include(p => p.Author).ToList();
             return View(postsWithAuthors);
+        }
+
+        public ActionResult SaveComment(string text, int id)
+        {
+            //int postId = ViewBag.Post.Id;
+
+            Comment comment = new Comment();
+            comment.Text = text;
+            if (User.Identity.Name != null)
+            {
+                comment.Author = db.Users
+                    .FirstOrDefault(u => u.UserName == User.Identity.Name);
+            }
+            comment.Post_Id = id;
+            db.Comments.Add(comment);
+            db.SaveChanges();
+
+            var result = this.db.Posts
+                .Where(post => post.Id == id)
+                .Select(PostViewModel.FromPost)
+                .FirstOrDefault();
+
+            return this.PartialView("_CommentResult", result);
         }
 
         // GET: Posts/Details/5
@@ -46,11 +72,13 @@ namespace Blog.Controllers
             {
                 post.Author = author;
             }
-            
-            var posts = db.Posts.OrderByDescending(p => p.Date).Take(6);
+
+            var posts = db.Posts.Include(p => p.Author).OrderByDescending(p => p.Date).Take(6);
             ViewBag.Posts = posts.ToList();
 
-            return View(post);
+            ViewBag.Post = post;
+
+            return View();
         }
 
         // GET: Posts/Create

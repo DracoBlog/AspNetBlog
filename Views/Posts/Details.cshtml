@@ -1,6 +1,6 @@
 ﻿@using Blog.Classes
 @using Blog.Models
-@model Blog.Models.Post
+@model PostViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -10,38 +10,40 @@
     <div class="info col-md-7">
 
         <div class="title col-md-11">
-            <h4 class="deepshadow">@Model.Title</h4>
-            <h6>~Posted on <i class="boldtext">@Model.Date.ToString("MMMM dd, yyyy")</i> by <i class="boldtext">@Model.Author.FullName</i></h6>
+            <h4 class="deepshadow">@ViewBag.Post.Title</h4>
+            <h6>~Posted on <i class="boldtext">@ViewBag.Post.Date.ToString("MMMM dd, yyyy")</i> by <i class="boldtext">@ViewBag.Post.Author.FullName</i></h6>
         </div>
 
         <div class="content col-md-11">
-            @Html.Raw(Model.Body)
+            @Html.Raw(ViewBag.Post.Body)
         </div>
 
         <div id="list2" class="comments">
-            <ul>
+            <ul class="commentsUL">
                 <h2>Comments</h2>
                 <hr/>
-                @foreach (Comment comment in Model.Comments)
-                {
-                    <div class="commentPadding">
-                        <li>
-                            <h5 class="text">@comment.Text</h5>
-                            @if (comment.Author != null)
-                            {
-                                <h6>~Posted on <i class="boldtext">@comment.Date.ToString("MMMM dd, yyyy")</i> by <i class="boldtext">@comment.Author.FullName</i></h6>
-                            }
-                            else
-                            {
-                                <h6>~Posted on <i class="boldtext">@comment.Date.ToString("MMMM dd, yyyy")</i> by <i class="boldtext">Anonymous User</i></h6>
-                            }
-                            
-                        </li>
-                    </div>
-                }
+                <div id="results">
+                    @Html.Partial("_CommentResult", Model)
+                </div>
             </ul>
-        </div>
+            <div id="post-details-@ViewBag.Post.Id">
 
+                @using (Ajax.BeginForm("SaveComment", null, new { id = ViewBag.Post.Id },
+                                        new AjaxOptions
+                                        {
+                                            HttpMethod = "POST",
+                                            UpdateTargetId = "results",
+                                            InsertionMode = InsertionMode.Replace
+                                        }, new { id = "commentForm" }))
+                {
+                    <input type="text" name="text" placeholder="Add Comment" />
+                    <input type="hidden" name="@ViewBag.Post.Id" value="@ViewBag.Post.Id" />
+                    <input type="submit" value="Post" />
+                }
+            </div>
+
+        </div>
+        
         <div class="actions col-md-11">
             <p>
                 @if (User.Identity.IsAuthenticated)
@@ -51,13 +53,13 @@
 
                     if (User.IsInRole("Administrators"))
                     {
-                        @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+                        @Html.ActionLink("Delete", "Delete", new { id = ViewBag.Post.Id })
                         @:|
                     }
 
-                    if (Model.Author != null && User.Identity.Name == Model.Author.UserName)
+                    if (ViewBag.Post.Author != null && User.Identity.Name == ViewBag.Post.Author.UserName)
                     {
-                            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+                            @Html.ActionLink("Edit", "Edit", new { id = ViewBag.Post.Id })
                             @:|
                     }
                 }
@@ -79,7 +81,7 @@
                         <div>
                             <h4><em>@post.Title</em></h4>
                             <h6 class="title">
-                                <i class="boldtext">@Model.Date.ToString("MMMM dd, yyyy")</i> by <i class="boldtext">@Model.Author.FullName</i>
+                                <i class="boldtext">@post.Date.ToString("MMMM dd, yyyy")</i> by <i class="boldtext">@post.Author.FullName</i>
                             </h6>
                         </div>
                     </a>

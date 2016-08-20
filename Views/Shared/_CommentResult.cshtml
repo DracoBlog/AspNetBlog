@@ -1,0 +1,38 @@
+﻿@using System.Activities.Expressions
+@using Blog.Classes
+@using Blog.Models
+@model PostViewModel
+
+@try
+{
+    if (Model.Comments.Any())
+    {
+        foreach (var comment in Model.Comments)
+        {
+            <div class="commentPadding">
+                <li>
+                    <h5 class="text">@comment.Text</h5>
+                    @if (comment.Author != null)
+                    {
+                        <h6>~Posted on <i class="boldtext">@comment.Date.ToString("MMMM dd, yyyy")</i> by <i class="boldtext">@comment.Author</i></h6>
+                    }
+                    else
+                    {
+                        <h6>~Posted on <i class="boldtext">@comment.Date.ToString("MMMM dd, yyyy")</i> by <i class="boldtext">Anonymous User</i></h6>
+                    }
+
+                </li>
+            </div>
+        }
+    }
+    else
+    {
+        <br/>
+        <div>No matches</div>
+    }
+}
+catch (NullReferenceException ex)
+{
+   Console.WriteLine("error"); 
+}
+

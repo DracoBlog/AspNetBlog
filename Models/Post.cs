@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -34,5 +35,10 @@ namespace Blog.Models
         public ApplicationUser Author { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
+
+        public ICollection<Tag> Tags { get; set; }
+
+        [DisplayName("Tags")]
+        public string TagsString { get; set; }
     }
 }

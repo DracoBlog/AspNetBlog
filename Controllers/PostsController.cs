@@ -57,7 +57,7 @@ namespace Blog.Controllers
             {
                 return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
             }
-            Post post = db.Posts.Include(p => p.Author).SingleOrDefault(p => p.Id == id);
+            Post post = db.Posts.Include(p => p.Author).Include(p => p.Comments).Include(p => p.Tags).SingleOrDefault(p => p.Id == id);
             if (post == null)
             {
                 return HttpNotFound();
@@ -65,6 +65,9 @@ namespace Blog.Controllers
 
             post.Comments = new List<Comment>();
             post.Comments = db.Comments.Include(p => p.Author).Where(c => c.Post_Id == post.Id).ToList();
+
+            post.Tags = new List<Tag>();
+            post.Tags = db.Tags.Where(t => t.Post_Id == post.Id).ToList();
 
             var author = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
 
@@ -77,6 +80,7 @@ namespace Blog.Controllers
             ViewBag.Posts = posts.ToList();
 
             ViewBag.Post = post;
+            ViewBag.Tags = post.Tags;
 
             var result = this.db.Posts
                 .Where(p => p.Id == id)
@@ -99,7 +103,7 @@ namespace Blog.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Body")] Post post)
+        public ActionResult Create([Bind(Include = "Id,Title,Body,TagsString")] Post post)
         {
             if (ModelState.IsValid)
             {
@@ -107,6 +111,18 @@ namespace Blog.Controllers
                     .FirstOrDefault(u => u.UserName == User.Identity.Name);
                 db.Posts.Add(post);
                 db.SaveChanges();
+
+                var postId = post.Id;
+
+                var tags = post.TagsString.Split(' ').ToList();
+                foreach (var tag in tags)
+                {
+                    Tag newTag = new Tag();
+                    newTag.Text = tag;
+                    newTag.Post_Id = postId;
+                    db.Tags.Add(newTag);
+                    db.SaveChanges();
+                }
                 this.AddNotification("Post Created!", NotificationType.SUCCESS);
                 return RedirectToAction("Index");
             }

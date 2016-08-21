@@ -17,6 +17,27 @@
         <div class="content col-md-11">
             @Html.Raw(ViewBag.Post.Body)
         </div>
+        
+        <div id="list3" class="tags">
+            <ul>
+                <li>Tags: </li>
+                @if (ViewBag.Post.Tags.Count > 0)
+                {
+                    foreach (var tag in ViewBag.Post.Tags)
+                    {
+                        <li class="tagLI">
+                            # @tag.Text
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li>
+                        <i class="boldtext">(no tags)</i>
+                    </li>
+                }
+            </ul>
+        </div>
 
         <div id="list2" class="comments">
             <ul class="commentsUL">
@@ -26,33 +47,37 @@
                     @Html.Partial("_CommentResult", Model)
                 </div>
             </ul>
-            <div id="post-details-@ViewBag.Post.Id">
+            <div class="pad" id="post-details-@ViewBag.Post.Id">
 
                 @using (Ajax.BeginForm("SaveComment", null, new { id = ViewBag.Post.Id },
-                                        new AjaxOptions
-                                        {
-                                            HttpMethod = "POST",
-                                            UpdateTargetId = "results",
-                                            InsertionMode = InsertionMode.Replace,
-                                            OnSuccess = "ajaxSuccess",
-                                        }, new { id = "commentForm" }))
+                new AjaxOptions
                 {
-                    <input type="text" class="form-control" name="text" placeholder="Add Comment" />
-                    <input type="submit" style="display:none" class="btn btn-default" value="Post" />
+                    HttpMethod = "POST",
+                    UpdateTargetId = "results",
+                    InsertionMode = InsertionMode.Replace,
+                    OnSuccess = "ajaxSuccess",
+                }, new { id = "commentForm" }))
+                {
+                    
+                    <textarea class="form-control floating" name="text" placeholder="Write a comment..."></textarea>
+                    <div class="subbutton">
+                        <input type="submit" class="btn btn-default" value="Post" />
+                    </div>
                 }
-               
+
             </div>
 
             <script>
-                var ajaxSuccess = function () {
-                    $('#commentForm').each(function() {
-                        this.reset(); 
-                    });
+                var ajaxSuccess = function() {
+                    $('#commentForm')
+                        .each(function() {
+                            this.reset();
+                        });
                 }
             </script>
-
+            
         </div>
-        
+
         <div class="actions col-md-11">
             <p>
                 @if (User.Identity.IsAuthenticated)

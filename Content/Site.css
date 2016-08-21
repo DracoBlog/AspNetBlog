@@ -57,6 +57,7 @@ textarea {
 }
 
 .actions {
+    float: left;
 }
 
 .cont {
@@ -72,6 +73,7 @@ ul > div > li {
     padding-top: 40px;
     padding-bottom: 20px;
     word-wrap: break-word;
+    padding-left: 20px;
 }
 
 .text {
@@ -184,7 +186,7 @@ div.recent > h4 {
      width:320px;
 }
 #list ul {
-     font-style:italic; font-family:Georgia, Times, serif; font-size:24px; color:#bfe1f1; list-style-type: disc;
+     font-style:italic; font-family:Georgia, Times, serif; font-size:24px; color:#bfe1f1; list-style-type: none;
 }
 #list ul li p {
      padding:8px; font-style:normal; font-family:Arial; font-size:13px; color:#eee;
@@ -193,8 +195,12 @@ div.recent > h4 {
      display: block;
 }
 
+#list2 {
+    width: 100%;
+}
 #list2 ul {
-     font-style:italic; font-family:Georgia, Times, serif; font-size:24px;list-style-type: disc; padding-left: 0;
+     font-style:italic; font-family:Georgia, Times, serif; font-size:24px;list-style-type: none; padding-left: 0;
+    width: 100%;
 }
 #list2 ul li p {
      padding:8px; font-style:normal; font-family:Arial; font-size:13px;
@@ -218,7 +224,50 @@ div.recent > h4 {
 }
 
 .comments {
+    float: left;
     margin: 20px;
+    width: 100%;
+}
+
+.subbutton {
+    float: left;
+    padding-left: 20px;
+    padding-top: 20px;
+    vertical-align: bottom;
+}
+
+.floating {
+    float: left;
+}
+
+.pad {
+    padding-left: 20px;
+}
+
+.commentInputPadding {
+    padding-left: 10px;
+    padding-bottom: 100px;
+    padding-top: 15px;
+}
+
+.tags {
+    float: left;
+}
+
+#list3 ul {
+     font-style:italic; font-family:Georgia, Times, serif; font-size:13px; list-style-type: none;padding-left: 20px;
+}
+
+#list3 ul > li {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+#list3 ul > li.tagLI {
+    border-radius: 10px;
+    background-color: #222;
+    color: white;
+    padding: 5px 10px;
 }
 
 @media screen and (max-width: 992px) {

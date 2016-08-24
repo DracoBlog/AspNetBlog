@@ -14,6 +14,7 @@ using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.Mvc;
 using Blog.Models;
+using PagedList;
 
 using Blog.Extensions;
 
@@ -25,10 +26,12 @@ namespace Blog.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Posts
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var postsWithAuthors = db.Posts.Include(p => p.Author).ToList();
-            return View(postsWithAuthors);
+            int pageSize = 6;
+            int pageNumber = (page ?? 1);
+            return View(postsWithAuthors.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult SaveComment(string text, int id)

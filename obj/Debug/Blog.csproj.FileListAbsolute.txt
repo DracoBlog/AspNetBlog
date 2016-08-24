@@ -439,3 +439,7 @@ E:\softuni\ProjectBlog\AspNetBlog\bin\System.Net.Http.Formatting.xml
 E:\softuni\ProjectBlog\AspNetBlog\obj\Debug\Blog.csprojResolveAssemblyReference.cache
 E:\softuni\ProjectBlog\AspNetBlog\obj\Debug\Blog.dll
 E:\softuni\ProjectBlog\AspNetBlog\obj\Debug\Blog.pdb
+E:\softuni\ProjectBlog\AspNetBlog\bin\PagedList.dll
+E:\softuni\ProjectBlog\AspNetBlog\bin\PagedList.Mvc.dll
+E:\softuni\ProjectBlog\AspNetBlog\bin\PagedList.xml
+E:\softuni\ProjectBlog\AspNetBlog\bin\PagedList.Mvc.xml

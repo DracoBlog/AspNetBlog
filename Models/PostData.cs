@@ -13,7 +13,7 @@ namespace Blog.Models
         public static ApplicationDbContext db = new ApplicationDbContext();
         public static List<Post> GetAll()
         {
-            return db.Posts.Include(p => p.Author).Include(p => p.Comments).Include(p => p.Tags).ToList();
+            return db.Posts.Include(p => p.Author).Include(p => p.Comments).Include(p => p.Tags).Include(p => p.Images).ToList();
         }
     }
 }

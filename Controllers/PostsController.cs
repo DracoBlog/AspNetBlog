@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.Mvc;
@@ -57,7 +61,8 @@ namespace Blog.Controllers
             {
                 return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
             }
-            Post post = db.Posts.Include(p => p.Author).Include(p => p.Comments).Include(p => p.Tags).SingleOrDefault(p => p.Id == id);
+            Post post = db.Posts.Include(p => p.Author).Include(p => p.Comments)
+                .Include(p => p.Tags).Include(p => p.Images).SingleOrDefault(p => p.Id == id);
             if (post == null)
             {
                 return HttpNotFound();
@@ -71,7 +76,7 @@ namespace Blog.Controllers
 
             var author = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
 
-            if(author != null)
+            if (author != null)
             {
                 post.Author = author;
             }
@@ -87,7 +92,9 @@ namespace Blog.Controllers
                 .Select(PostViewModel.FromPost)
                 .FirstOrDefault();
 
-            return View(result);
+            ViewBag.Result = result;
+
+            return View(post);
         }
 
         // GET: Posts/Create
@@ -103,8 +110,22 @@ namespace Blog.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Body,TagsString")] Post post)
+        public ActionResult Create([Bind(Include = "Id,Title,Body,TagsString")] Post post, HttpPostedFileBase upload)
         {
+            if (upload != null && upload.ContentLength > 0)
+            {
+                var avatar = new Image
+                {
+                    FileName = System.IO.Path.GetFileName(upload.FileName),
+                    FileType = FileType.Avatar,
+                    ContentType = upload.ContentType
+                };
+                using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                {
+                    avatar.Content = reader.ReadBytes(upload.ContentLength);
+                }
+                post.Images = new List<Image> { avatar };
+            }
             if (ModelState.IsValid)
             {
                 post.Author = db.Users
@@ -138,7 +159,7 @@ namespace Blog.Controllers
             {
                 return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
             }
-            Post post = db.Posts.Include(p => p.Author).SingleOrDefault(p => p.Id == id);
+            Post post = db.Posts.Include(p => p.Author).Include(p => p.Images).SingleOrDefault(p => p.Id == id);
 
             if (post == null || (post.Author.UserName != User.Identity.Name && !User.IsInRole("Administrators")))
             {
@@ -157,12 +178,47 @@ namespace Blog.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Body,Date,Author_Id")] Post post)
+        public ActionResult Edit([Bind(Include = "Id,Title,Body,Date,Author_Id")] Post post, HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(post).State = EntityState.Modified;
                 db.SaveChanges();
+                var postToUpdate = db.Posts.Include(p => p.Images).SingleOrDefault(p => p.Id == post.Id);
+
+                try
+                {
+                    if (upload != null && upload.ContentLength > 0)
+                    {
+                        if (postToUpdate.Images.Any(f => f.FileType == FileType.Avatar))
+                        {
+                            db.Images.Remove(postToUpdate.Images.First(f => f.FileType == FileType.Avatar));
+                        }
+                        var avatar = new Image
+                        {
+                            FileName = System.IO.Path.GetFileName(upload.FileName),
+                            FileType = FileType.Avatar,
+                            ContentType = upload.ContentType
+                        };
+                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                        {
+                            avatar.Content = reader.ReadBytes(upload.ContentLength);
+                        }
+                        postToUpdate.Images = new List<Image> { avatar };
+                    }
+                    db.Entry(postToUpdate).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                catch (RetryLimitExceededException /* dex */)
+                {
+                    //Log the error (uncomment dex variable name and add a line here to write a log.
+                    ModelState.AddModelError("",
+                        "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
+
+
                 this.AddNotification("Post was edited successfully !", NotificationType.SUCCESS);
                 return RedirectToAction("Index");
             }

@@ -37,6 +37,10 @@ textarea {
     margin-top: 50px;
 }
 
+.marg-bot {
+    margin-bottom: 15px;
+}
+
 .alert {
     margin-top: 15px;
     text-align: center;
@@ -77,7 +81,7 @@ ul > div > li {
 }
 
 .text {
-    
+    color: #605E5E;
 }
 
 hr {
@@ -87,7 +91,7 @@ hr {
 }
 
 .title {
-    color: purple;
+    color: #646FB0;
 }
 
 .boldtext{
@@ -186,7 +190,7 @@ div.recent > h4 {
      width:320px;
 }
 #list ul {
-     font-style:italic; font-family:Georgia, Times, serif; font-size:24px; color:#bfe1f1; list-style-type: none;
+     font-style: normal; font-family:Pericles; font-size:24px; color:#bfe1f1; list-style-type: none;
 }
 #list ul li p {
      padding:8px; font-style:normal; font-family:Arial; font-size:13px; color:#eee;
@@ -270,10 +274,53 @@ div.recent > h4 {
     padding: 5px 10px;
 }
 
+.image-parameters {
+    max-width: 400px;
+    max-height: 400px;
+    min-width: 100px;
+    min-height: 100px;
+}
+
+.border {
+    border-left: 1px solid black;
+    padding-left: 10px;
+}
+
+.text-size {
+    font-size: 13px;
+}
+
 @media screen and (max-width: 992px) {
 
     #list {
         width: 100%;
     }
 
+    .image {
+        width: 100%;
+    }
+
+    .content {
+        width: 100%;
+    }
+
+    .comments {
+        width: 100%;
+    }
+
+    .tags {
+        width: 100%;
+    }
+
+    .title {
+        width: 100%;
+    }
+
+    .actions {
+        width: 100%;
+    }
+
+    .info {
+        width: 100%;
+    }
 }

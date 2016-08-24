@@ -1,29 +1,37 @@
 ﻿@using Blog.Classes
 @using Blog.Models
-@model PostViewModel
+@using Microsoft.Ajax.Utilities
+@model Post
 
 @{
     ViewBag.Title = "Details";
 }
 
-<div class="cont col-md-12">
-    <div class="info col-md-7">
+<div class="cont col-xs-12">
+    <div class="info col-xs-7">
 
-        <div class="title col-md-11">
-            <h4 class="deepshadow">@ViewBag.Post.Title</h4>
-            <h6><i class="boldtext">~Posted on @ViewBag.Post.Date.ToString("MMMM dd, yyyy") by @ViewBag.Post.Author.FullName</i></h6>
+        <div class="title col-xs-11">
+            <h4 class="deepshadow">@Model.Title</h4>
+            <h6><i class="boldtext">~Posted on @Model.Date.ToString("MMMM dd, yyyy") by @Model.Author.FullName</i></h6>
         </div>
 
-        <div class="content col-md-11">
-            @Html.Raw(ViewBag.Post.Body)
+        @if (Model.Images.Any(f => f.FileType == FileType.Avatar))
+        {
+            <div class="image col-xs-11">
+                <img src="~/File?id=@Model.Images.First(f => f.FileType == FileType.Avatar).FileId" class="image-parameters" alt="avatar" />
+            </div>
+        }
+
+        <div class="content col-xs-11">
+            @Html.Raw(Model.Body)
         </div>
-        
-        <div id="list3" class="tags">
+
+        <div id="list3" class="tags col-xs-11">
             <ul>
                 <li>Tags: </li>
-                @if (ViewBag.Post.Tags.Count > 0)
+                @if (Model.Tags.Count > 0)
                 {
-                    foreach (var tag in ViewBag.Post.Tags)
+                    foreach (var tag in Model.Tags)
                     {
                         <li class="tagLI">
                             # @tag.Text
@@ -39,26 +47,27 @@
             </ul>
         </div>
 
+        @{ PostViewModel results = ViewBag.Result;}
         <div id="list2" class="comments">
             <ul class="commentsUL">
                 <h2>Comments</h2>
-                <hr/>
+                <hr />
                 <div id="results">
-                    @Html.Partial("_CommentResult", Model)
+                    @Html.Partial("_CommentResult", results)
                 </div>
             </ul>
-            <div class="pad" id="post-details-@ViewBag.Post.Id">
+            <div class="pad" id="post-details-@Model.Id">
 
-                @using (Ajax.BeginForm("SaveComment", null, new { id = ViewBag.Post.Id },
-                new AjaxOptions
+                @using (Ajax.BeginForm("SaveComment", null, new { id = Model.Id },
+            new AjaxOptions
+            {
+                HttpMethod = "POST",
+                UpdateTargetId = "results",
+                InsertionMode = InsertionMode.Replace,
+                OnSuccess = "ajaxSuccess",
+            }, new { id = "commentForm" }))
                 {
-                    HttpMethod = "POST",
-                    UpdateTargetId = "results",
-                    InsertionMode = InsertionMode.Replace,
-                    OnSuccess = "ajaxSuccess",
-                }, new { id = "commentForm" }))
-                {
-                    
+
                     <textarea class="form-control floating" name="text" placeholder="Write a comment..."></textarea>
                     <div class="subbutton">
                         <input type="submit" class="btn btn-default" value="Post" />
@@ -75,10 +84,10 @@
                         });
                 }
             </script>
-            
+
         </div>
 
-        <div class="actions col-md-11">
+        <div class="actions col-xs-11">
             <p>
                 @if (User.Identity.IsAuthenticated)
                 {
@@ -87,14 +96,14 @@
 
                     if (User.IsInRole("Administrators"))
                     {
-                        @Html.ActionLink("Delete", "Delete", new { id = ViewBag.Post.Id })
+                        @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
                         @:|
                     }
 
-                    if (ViewBag.Post.Author != null && User.Identity.Name == ViewBag.Post.Author.UserName)
+                    if (ViewBag.Post.Author != null && User.Identity.Name == Model.Author.UserName)
                     {
-                            @Html.ActionLink("Edit", "Edit", new { id = ViewBag.Post.Id })
-                            @:|
+                        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+                        @:|
                     }
                 }
 
@@ -104,22 +113,24 @@
         </div>
     </div>
 
-    <div id="list" class="recent col-md-3">
+    <div id="list" class="recent col-xs-3">
         <h4 class="hit-the-floor">Recent Posts</h4>
-        <hr/>
+        <hr />
         <ul>
             @foreach (var post in ViewBag.Posts)
             {
-                <li>
-                    <a href="/Posts/Details/@post.Id">
-                        <div>
-                            <h4><em>@post.Title</em></h4>
-                            <h6 class="title">
-                                <i class="boldtext">@post.Date.ToString("MMMM dd, yyyy")</i> by <i class="boldtext">@post.Author.FullName</i>
-                            </h6>
+                <li class="marg-bot">
+
+                    <div>
+                        <a href="/Posts/Details/@post.Id">
+                            <div class="title boldtext">@post.Title</div>
+                        </a>
+                        <div class="text-size text">
+                            @post.Date.ToString("MMMM dd, yyyy") by @post.Author.FullName
                         </div>
-                    </a>
-                </li>  
+                    </div>
+
+                </li>
             }
         </ul>
     </div>

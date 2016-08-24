@@ -40,5 +40,6 @@ namespace Blog.Models
 
         [DisplayName("Tags")]
         public string TagsString { get; set; }
+        public virtual ICollection<Image> Images { get; set; }
     }
 }

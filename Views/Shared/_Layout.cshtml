@@ -36,9 +36,8 @@
     <div class="container body-content">
         @Html.Partial("_Notifications")
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Blog</p>
+        <footer class="footer col-xs-12">
+            @*<p class="text-white text-center">&copy; @DateTime.Now.Year - Blog</p>*@
         </footer>
     </div>
 

@@ -28,8 +28,8 @@ namespace Blog.Controllers
         // GET: Posts
         public ActionResult Index(int? page)
         {
-            var postsWithAuthors = db.Posts.Include(p => p.Author).ToList();
-            int pageSize = 6;
+            var postsWithAuthors = db.Posts.Include(p => p.Author).OrderByDescending(p => p.Date).ToList();
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(postsWithAuthors.ToPagedList(pageNumber, pageSize));
         }

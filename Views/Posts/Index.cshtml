@@ -1,35 +1,36 @@
-﻿@*@using Blog.Classes
-@using Blog.Models
-@model IEnumerable<Post>*@
-@model PagedList.IPagedList<Blog.Models.Post>
+﻿@model PagedList.IPagedList<Blog.Models.Post>
 @using Blog.Classes
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Posts</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<div>
+    <div style="display: inline-block; padding-top: 15px;">
+        <h1 class="text-white">Posts</h1>
+    </div>
+    <div style="display: inline-block; padding-left: 15px;">
+        @Html.ActionLink("+", "Create", new { id = "create" }, new { @class = "btn btn-sm btn-success" })
+    </div>
+</div>
+<table class="text-white table table-responsive col-xs-12">
     <tr>
-        <th>
+        <th class="col-xs-2">
             Title
         </th>
-        <th>
+        <th class="col-xs-4">
             Content
         </th>
-        <th>
+        <th class="col-xs-1">
             Date
         </th>
-        <th>
+        <th class="col-xs-2">
             Author
         </th>
-        <th>
+        <th class="col-xs-3">
             Actions
         </th>
     </tr>
@@ -37,16 +38,16 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
+            <td class="col-xs-2">
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
-            <td>
+            <td class="col-xs-4">
                 @Utils.CutText(item.Body)
             </td>
-            <td>
+            <td class="col-xs-1">
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
-            <td>
+            <td class="col-xs-2">
                 @if (item.Author != null)
                 {
                     @item.Author.FullName
@@ -57,17 +58,15 @@
                     <i>(no author)</i>
                 }
             </td>
-            <td>
+            <td class="col-xs-3">
                 @if (User.IsInRole("Administrators") || (item.Author != null && User.Identity.Name == item.Author.UserName))
                 {
-                    @Html.ActionLink("Edit", "Edit", new {id = item.Id})
-                    @:|
+                    @Html.ActionLink("Edit", "Edit", new {id = item.Id}, new { @class = "btn btn-sm btn-default" })
                 }
-                @Html.ActionLink("Details", "Details", new {id = item.Id}) |
+                @Html.ActionLink("Details", "Details", new {id = item.Id}, new { @class = "btn btn-sm btn-default"})
                 @if (User.IsInRole("Administrators") || (item.Author != null && User.Identity.Name == item.Author.UserName))
                 {
-                    @Html.ActionLink("Delete", "Delete", new {id = item.Id})
-                    @:|
+                    @Html.ActionLink("Delete", "Delete", new {id = item.Id}, new { @class = "btn btn-sm btn-default" })
                 }
             </td>
         </tr>
@@ -75,7 +74,7 @@
 
 </table>
 <br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
 
 @Html.PagedListPager(Model, page => Url.Action("Index",
     new { page }))

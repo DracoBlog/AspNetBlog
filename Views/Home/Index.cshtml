@@ -8,16 +8,23 @@
 @model List<PostViewModel>
 <div class="marg col-md-12">
     @using (Ajax.BeginForm("Search", null,
-                                new AjaxOptions
-                                {
-                                    HttpMethod = "POST",
-                                    UpdateTargetId = "results",
-                                    InsertionMode = InsertionMode.Replace
-                                }, new { id = "searchForm" }))
+                                        new AjaxOptions
+                                        {
+                                            HttpMethod = "POST",
+                                            UpdateTargetId = "results",
+                                            InsertionMode = InsertionMode.Replace
+                                        }, new { id = "searchForm" }))
     {
-        <input type="text" name="query" placeholder="Live Search"
-               oninput="$('#searchForm').submit()" />
-            <input type="submit" value="Search" />
+        <div class="col-xs-12">
+            <div style="-webkit-transform: rotate(45deg);
+               -moz-transform: rotate(45deg);
+                 -o-transform: rotate(45deg); color: white; float: right; font-size: 40px;">
+                &#9906;
+            </div>
+            <input type="text" name="query" class="search" placeholder="Live Search"
+                   oninput="$('#searchForm').submit()" />
+            <input type="submit" style="display: none;" value="Search" />
+        </div>
     }
     <div id="results">
         @Html.Partial("_PostResult", Model)

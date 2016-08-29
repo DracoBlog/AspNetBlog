@@ -33,6 +33,13 @@ textarea {
     margin-top: 15px;
 }
 
+body {
+    background: url('../img/book-dark.jpg') no-repeat center;
+    background-attachment: fixed;
+    background-size: 100%;
+    color: white;
+} 
+
 .marg {
     margin-top: 50px;
 }
@@ -73,6 +80,15 @@ ul > div > li {
     list-style-type: none;   
 }
 
+.btn-default {
+    border-radius: 1px; 
+}
+
+.btn-sm {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
 .content {
     padding-top: 40px;
     padding-bottom: 20px;
@@ -80,14 +96,11 @@ ul > div > li {
     padding-left: 20px;
 }
 
-.text {
-    color: #605E5E;
-}
-
 hr {
     border: 0;
     height: 1px;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    background-color: white;
 }
 
 .title {
@@ -111,7 +124,7 @@ div.recent > h4 {
     font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
     font-size: 30px;
     text-align: center;
-    color: #131313;
+    color: #whitesmoke;
     text-shadow: 2px 8px 6px rgba(0,0,0,0.2),
                  0px -5px 35px rgba(255,255,255,0.3);
     text-transform: uppercase;
@@ -180,7 +193,7 @@ div.recent > h4 {
   }
   
 .hit-the-floor {
-    color: #fff;
+    color: whitesmoke;
     font-size: 12em;
     font-family: Helvetica;
     text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
@@ -208,18 +221,6 @@ div.recent > h4 {
 }
 #list2 ul li p {
      padding:8px; font-style:normal; font-family:Arial; font-size:13px;
-}
-#list2 hr {
-    border: none;
-    height: 10px;
-    width: 90%;
-    margin-left: 0;
-    margin-right: 0;
-    background: linear-gradient(-135deg, #fff 5px, transparent 0) 0 5px, linear-gradient(135deg, #fff 5px, #8c8c8c 0) 0 5px;
-    background-color: #fff;
-    background-position: left bottom;
-    background-repeat: repeat-x;
-    background-size: 10px 10px;
 }
 
 .commentPadding {
@@ -288,6 +289,227 @@ div.recent > h4 {
 
 .text-size {
     font-size: 13px;
+}
+
+.wrapper {
+  width: 420px;
+  margin: 0 auto;
+}
+
+.wrapper h1 {
+  padding: 30px 0px 0px 0px;
+  font: 25px Oswald;
+  color: #FFF;
+  text-transform: uppercase;
+  text-shadow: #000 0px 1px 5px;
+  margin: 0px;
+}
+
+.other {
+    float: left;
+}
+
+#socialLoginForm .otherP {
+    margin-bottom: 10px;
+}
+
+.initial {
+    float: left;
+}
+
+.facebook {
+    background: transparent;
+    border: none;
+}
+
+.facebook:hover {
+    background: transparent;
+    border: none;
+}
+
+.wrapper p {
+  font: 13px Open Sans;
+  color: #6E6E6E;
+  text-shadow: #000 0px 1px 5px;
+  margin-bottom: 30px;
+}
+
+.wrapper .form {
+  width: 100%;
+}
+
+.wrapper input[type="text"], input[type="password"], input[type="file"] {
+  width: 98%;
+  padding: 15px 0px 15px 8px;
+  border-radius: 5px;
+  box-shadow: inset 4px 6px 10px -4px rgba(0, 0, 0, 0.3), 0 1px 1px -1px rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.2);
+  outline: none;
+  border: none;
+  border: 1px solid black;
+  margin-bottom: 10px;
+  color: #6E6E6E;
+  text-shadow: #000 0px 1px 5px;
+}
+
+.wrapper textarea, select {
+  width: 98%;
+  padding: 15px 0px 15px 8px;
+  border-radius: 5px;
+  box-shadow: inset 4px 6px 10px -4px rgba(0, 0, 0, 0.3), 0 1px 1px -1px rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.2);
+  outline: none;
+  border: none;
+  border: 1px solid black;
+  margin-bottom: 10px;
+  color: #6E6E6E;
+  text-shadow: #000 0px 1px 5px;
+}
+
+.wrapper input[type="submit"] {
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#28D2DE), to(#1A878F));
+  background-image: -webkit-linear-gradient(#28D2DE 0%, #1A878F 100%);
+  background-image: -moz-linear-gradient(#28D2DE 0%, #1A878F 100%);
+  background-image: -o-linear-gradient(#28D2DE 0%, #1A878F 100%);
+  background-image: linear-gradient(#28D2DE 0%, #1A878F 100%);
+  font: 14px Oswald;
+  color: #FFF;
+  text-transform: uppercase;
+  text-shadow: #000 0px 1px 5px;
+  border: 1px solid #000;
+  opacity: 0.7;
+  -webkit-box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.7);
+  border-top: 1px solid rgba(255, 255, 255, 0.8) !important;
+  -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, transparent), to(rgba(255, 255, 255, 0.2)));
+}
+
+body {
+    color: #333;
+}
+
+.text-white {
+    color: white;
+}
+
+.posts {
+    transition: border-color 0.4s ease 0s, background-color 0.4s ease 0s;
+}
+
+.posts:hover {
+    background:rgba(255,255,255,0.1);
+    transition: border-color 0.4s ease 0s, background-color 0.4s ease 0s;
+}
+
+.posts a:link {
+    color: #00bfff;
+}
+
+.search {
+    float: right;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    width: 98%;
+    padding: 15px 0px 15px 8px;
+    border-radius: 5px;
+    box-shadow: inset 4px 6px 10px -4px rgba(0, 0, 0, 0.3), 0 1px 1px -1px rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.2);
+    outline: none;
+    border: none;
+    border: 1px solid black;
+    margin-bottom: 10px;
+    color: #6E6E6E;
+    text-shadow: #000 0px 1px 5px;
+}
+
+a:link:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.read {
+    background: transparent;
+    color: white;
+    transition: border-color 0.4s ease 0s, background-color 0.4s ease 0s;
+}
+
+.read a:hover {
+    background: whitesmoke;
+    color: darkblue;
+    transition: border-color 0.4s ease 0s, background-color 0.4s ease 0s;
+}
+
+.wrapper input:focus {
+  box-shadow: inset 4px 6px 10px -4px rgba(0, 0, 0, 0.7), 0 1px 1px -1px rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.3);
+  -webkit-transition: 1s ease;
+  -moz-transition: 1s ease;
+  -o-transition: 1s ease;
+  -ms-transition: 1s ease;
+  transition: 1s ease;
+}
+
+.wrapper input[type="submit"]:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.wrapper .username-help {
+  display: none;
+  padding: 0px;
+  margin: 0px 0px 15px 0px;
+}
+
+.wrapper .password-help {
+    display: none;
+    padding: 0px;
+    margin: 0px 0px 15px 0px;
+}
+
+.wrapper .confirmpassword-help {
+  display: none;
+  padding: 0px;
+  margin: 0px 0px 15px 0px;
+}
+
+.wrapper .email-help {
+  display: none;
+  padding: 0px;
+  margin: 0px 0px 15px 0px;
+}
+
+.wrapper .fullname-help {
+  display: none;
+  padding: 0px;
+  margin: 0px 0px 15px 0px;
+}
+
+.wrapper .title-help {
+  display: none;
+  padding: 0px;
+  margin: 0px 0px 15px 0px;
+}
+
+.wrapper .body-help {
+  display: none;
+  padding: 0px;
+  margin: 0px 0px 15px 0px;
+}
+
+.scroll::-webkit-scrollbar {
+   display: none;
+ }
+
+.wrapper .tags-help {
+  display: none;
+  padding: 0px;
+  margin: 0px 0px 15px 0px;
 }
 
 @media screen and (max-width: 992px) {

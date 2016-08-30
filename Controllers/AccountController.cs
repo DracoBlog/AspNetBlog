@@ -80,7 +80,7 @@ namespace Blog.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    this.AddNotification("Now you are singed!", NotificationType.SUCCESS);
+                    this.AddNotification("Now you are signed!", NotificationType.SUCCESS);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

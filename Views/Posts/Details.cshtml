@@ -18,9 +18,38 @@
         @if (Model.Images.Any(f => f.FileType == FileType.Avatar))
         {
             <div class="image col-xs-11" style="text-align: center; margin-top: 15px;">
-                <img src="~/File?id=@Model.Images.First(f => f.FileType == FileType.Avatar).FileId" class="image-parameters" alt="avatar" />
+                <img src="~/File?id=@Model.Images.First(f => f.FileType == FileType.Avatar).FileId" class="image-parameters" id="myImg" alt="FullScreen"/>
+                <div id="myModal" style="margin-top: 50px;" class="modal">
+                    <span class="close">×</span>
+                    <img class="modal-content" id="img01">
+                    <div id="caption"></div>
+                </div>
             </div>
         }
+
+        <script>
+            // Get the modal
+            var modal = document.getElementById('myModal');
+
+            // Get the image and insert it inside the modal - use its "alt" text as a caption
+            var img = document.getElementById('myImg');
+            var modalImg = document.getElementById("img01");
+            var captionText = document.getElementById("caption");
+            img.onclick = function () {
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                modalImg.alt = this.alt;
+                captionText.innerHTML = this.alt;
+            }
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+        </script>
 
         <div class="content col-xs-11">
             @Html.Raw(Model.Body)

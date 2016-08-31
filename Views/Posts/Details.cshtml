@@ -125,13 +125,10 @@
 
                     if (User.IsInRole("Administrators"))
                     {
-                        @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+                        @Html.ActionLink("Delete", "Delete", new {id = Model.Id})
                         @:|
-                    }
 
-                    if (Model.Author != null && User.Identity.Name == Model.Author.UserName)
-                    {
-                        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+                        @Html.ActionLink("Edit", "Edit", new {id = Model.Id})
                         @:|
                     }
                 }

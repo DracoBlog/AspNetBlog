@@ -522,3 +522,5 @@ C:\Users\steff\Desktop\Are daj pak\AspNetBlog\bin\System.Net.Http.Formatting.xml
 C:\Users\steff\Desktop\Are daj pak\AspNetBlog\obj\Debug\Blog.csprojResolveAssemblyReference.cache
 C:\Users\steff\Desktop\Are daj pak\AspNetBlog\obj\Debug\Blog.dll
 C:\Users\steff\Desktop\Are daj pak\AspNetBlog\obj\Debug\Blog.pdb
+E:\softuni\ProjectBlog\AspNetBlog\bin\Facebook.dll
+E:\softuni\ProjectBlog\AspNetBlog\bin\Facebook.xml

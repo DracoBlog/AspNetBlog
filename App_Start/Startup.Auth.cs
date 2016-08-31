@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using Blog.Models;
+using Microsoft.Owin.Security.Facebook;
 
 namespace Blog
 {
@@ -53,10 +54,25 @@ namespace Blog
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
             //   consumerSecret: "");
+            var fbAuthOpts = new FacebookAuthenticationOptions();
+            fbAuthOpts.Scope.Add("public_profile");
+            fbAuthOpts.Scope.Add("email");
 
-            app.UseFacebookAuthentication(
-              appId: "1143906479010084",
-             appSecret: "5e749071a4b32402f9aa10c98f963f96");
+
+            fbAuthOpts.AppId = "1143906479010084";
+            fbAuthOpts.AppSecret = "5e749071a4b32402f9aa10c98f963f96";
+            fbAuthOpts.Provider = new FacebookAuthenticationProvider()
+            {
+                OnAuthenticated = async context =>
+                {
+                    context.Identity.AddClaim(new System.Security.Claims.Claim("FacebookAccessToken", context.AccessToken));
+                }
+            };
+
+            app.UseFacebookAuthentication(fbAuthOpts);
+            //  app.UseFacebookAuthentication(
+            //  appId: "1143906479010084",
+            // appSecret: "5e749071a4b32402f9aa10c98f963f96");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Blog.Models;
 using Blog.Extensions;
+using Facebook;
 
 namespace Blog.Controllers
 {
@@ -324,6 +325,16 @@ namespace Blog.Controllers
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
 
+        #region Variables
+
+
+
+
+        public static string OFname { get; set; }
+        public static string OLname { get; set; }
+
+        #endregion Variables
+
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
@@ -350,10 +361,23 @@ namespace Blog.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    //  var fb = new FacebookClient(loginInfo.ExternalIdentity.Claims.FirstOrDefault(x => x.Type == "FacebookAccessToken").Value);
+                    //   dynamic userFbData = fb.Get("me");
+                    var identity = AuthenticationManager.GetExternalIdentity(DefaultAuthenticationTypes.ExternalCookie);
+                    var access_token = identity.FindFirstValue("FacebookAccessToken");
+                    var fb1 = new FacebookClient(access_token);
+                    dynamic myInfo = fb1.Get("/me?fields=email"); // specify the email field
+                    dynamic Fname = fb1.Get("/me?fields=first_name");
+                    dynamic Lname = fb1.Get("/me?fields=last_name");
+                    loginInfo.Email = myInfo.email;
+                    OFname = Fname.first_name;
+                    OLname = Lname.last_name;
+
+
+
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { FullName = OFname + " " + OLname, Email = loginInfo.Email });
             }
         }
-
         //
         // POST: /Account/ExternalLoginConfirmation
         [System.Web.Mvc.HttpPost]
